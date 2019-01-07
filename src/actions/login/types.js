@@ -1,0 +1,7 @@
+const SUCCESSFUL = 'LOGIN/SUCCESSFUL';
+const FAILED = 'LOGIN/LOGIN';
+
+export {
+  SUCCESSFUL,
+  FAILED,
+};

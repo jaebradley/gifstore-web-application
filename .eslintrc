@@ -1,0 +1,15 @@
+{
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+          "config": "./config/webpack.config.common.js"
+      }
+    }
+  },
+  "extends": "eslint-config-airbnb",
+  "env": {
+    "jest": true,
+    "browser": true
+  },
+  "parser": "babel-eslint"
+}

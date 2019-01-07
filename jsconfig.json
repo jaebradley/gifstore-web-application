@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "es6",
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "rootDir": "./src/",
+    "baseUrl": "./src/",
+    "paths": {
+      "Components/*": ["./src/components/*"],
+      "Actions/*": ["./src/actions/*"]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
