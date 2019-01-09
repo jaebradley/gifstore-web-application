@@ -10,14 +10,22 @@ import {
 import createSagaMiddleware from 'redux-saga';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import {
+  Router,
+  Route,
+  Switch,
+} from 'react-router';
+
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import theme from './theme';
+import history from './history';
 
 import rootSaga from './sagas';
 import reducer from './reducer';
 
 import Login from './containers/Login';
+import Home from './components/Home';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -35,7 +43,20 @@ if (process.env.NODE_ENV !== 'production') {
 const App = () => (
   <Provider store={store}>
     <MuiThemeProvider theme={theme}>
-      <Login />
+      <Router history={history}>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            component={Home}
+          />
+          <Route
+            exact
+            path="/login"
+            component={Login}
+          />
+        </Switch>
+      </Router>
     </MuiThemeProvider>
   </Provider>
 );
