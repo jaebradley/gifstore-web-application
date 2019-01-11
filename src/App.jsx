@@ -15,6 +15,9 @@ import {
   Route,
   Switch,
 } from 'react-router';
+import {
+  ApolloProvider,
+} from 'react-apollo';
 
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -26,6 +29,8 @@ import reducer from './reducer';
 
 import Login from './containers/Login';
 import Home from './components/Home';
+
+import client from './client';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -43,20 +48,22 @@ if (process.env.NODE_ENV !== 'production') {
 const App = () => (
   <Provider store={store}>
     <MuiThemeProvider theme={theme}>
-      <Router history={history}>
-        <Switch>
-          <Route
-            exact
-            path="/"
-            component={Home}
-          />
-          <Route
-            exact
-            path="/login"
-            component={Login}
-          />
-        </Switch>
-      </Router>
+      <ApolloProvider client={client}>
+        <Router history={history}>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              component={Home}
+            />
+            <Route
+              exact
+              path="/login"
+              component={Login}
+            />
+          </Switch>
+        </Router>
+      </ApolloProvider>
     </MuiThemeProvider>
   </Provider>
 );
