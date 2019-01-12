@@ -14,7 +14,7 @@ const Images = () => (
       }) => (
         <div>
           {
-            'foo'
+            data && data.me && data.me.urls && data.me.urls.edges && data.me.urls.edges[0].node.url
           }
         </div>
       )

@@ -2,10 +2,14 @@ import gql from 'graphql-tag';
 
 const query = gql`
   {
-    user {
-      url {
-        id,
-        url,
+    me {
+      urls {
+        edges {
+          node {
+            id,
+            url,
+          }
+        }
       }
     }
   }

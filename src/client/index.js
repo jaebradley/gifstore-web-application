@@ -3,7 +3,6 @@ import {
 } from 'apollo-client';
 import {
   ApolloLink,
-  concat,
 } from 'apollo-link';
 import {
   HttpLink,
@@ -22,7 +21,7 @@ const httpLink = new HttpLink({
 const authLink = new ApolloLink((operation, forward) => {
   operation.setContext({
     headers: {
-      authorization: window.localStorage.getItem('authToken'),
+      Authorization: `Bearer ${window.localStorage.getItem('authToken')}`,
     },
   });
 
@@ -36,7 +35,7 @@ const logoutLink = onError(({ networkError }) => {
 });
 
 const client = new ApolloClient({
-  link: concat(authLink, httpLink, logoutLink),
+  link: ApolloLink.from([authLink, logoutLink, httpLink]),
   cache: new InMemoryCache(),
 });
 

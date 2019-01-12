@@ -1,4 +1,5 @@
 import {
+  call,
   select,
 } from 'redux-saga/effects';
 import axios from 'axios';
@@ -7,7 +8,7 @@ import {
   getToken,
 } from '../data/selectors/authorization';
 
-async function* makeHTTPRequest({
+function* makeHTTPRequest({
   path,
   method = 'GET',
   queryParameters = {},
@@ -18,7 +19,7 @@ async function* makeHTTPRequest({
     baseURL: process.env.SERVER_BASE_URL,
   });
   const token = yield select(getToken);
-  const response = await instance.request({
+  const response = yield call(instance.request, {
     url: path,
     method,
     headers: {
@@ -26,9 +27,9 @@ async function* makeHTTPRequest({
       ...headers,
     },
     params: queryParameters,
-    body,
+    data: body,
   });
-  return response.data;
+  return response;
 }
 
 export default makeHTTPRequest;

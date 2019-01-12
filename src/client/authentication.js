@@ -5,7 +5,8 @@ import {
 import makeHTTPRequest from './makeHTTPRequest';
 
 function* google(accessToken) {
-  yield call(makeHTTPRequest, { path: '/api/google/authentication', method: 'POST', body: { token: accessToken } });
+  const response = yield call(makeHTTPRequest, { path: '/api/google/authentication', method: 'POST', body: { token: accessToken } });
+  return response;
 }
 
 export {
