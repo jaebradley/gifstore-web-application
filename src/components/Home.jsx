@@ -1,10 +1,11 @@
 import React from 'react';
 
 import Images from './Images';
+import AddURL from './AddURL';
 
 const Home = () => (
   <div>
-    Home
+    <AddURL />
     <Images />
   </div>
 );
