@@ -5,6 +5,8 @@ import {
 
 import query from './query';
 
+import DeleteImage from '../DeleteImage';
+
 const Images = () => (
   <Query query={query}>
     {
@@ -23,6 +25,7 @@ const Images = () => (
 
         return urls.map(url => (
           <div style={{ height: '250px', width: '250px' }}>
+            <DeleteImage url={url} />
             <img
               key={url}
               alt="gif"
