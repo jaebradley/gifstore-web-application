@@ -19,6 +19,8 @@ import {
   ApolloProvider,
 } from 'react-apollo';
 
+import 'react-virtualized/styles.css';
+
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import theme from './theme';
