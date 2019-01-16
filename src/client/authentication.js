@@ -9,6 +9,11 @@ function* google(accessToken) {
   return response;
 }
 
+async function refreshCredentials(refreshToken) {
+  return makeHTTPRequest({ path: '/api/authentication/refresh-credentials', method: 'POST', body: { token: refreshToken } });
+}
+
 export {
   google,
+  refreshCredentials,
 };

@@ -13,6 +13,8 @@ import {
 import {
   InMemoryCache,
 } from 'apollo-cache-inmemory';
+import promiseToObservable from '../promiseToObservable';
+import refreshCredentials from '../refreshCredentials';
 
 const httpLink = new HttpLink({
   uri: `${process.env.SERVER_BASE_URL}/graphql`,
@@ -28,10 +30,34 @@ const authLink = new ApolloLink((operation, forward) => {
   return forward(operation);
 });
 
-const logoutLink = onError(({ networkError }) => {
-  if (networkError.statusCode === 401) {
-    window.location.assign('/login');
+const logoutLink = onError(({
+  graphQLErrors,
+  networkError,
+  operation,
+  forward,
+}) => {
+  if (graphQLErrors) {
+    console.log('graphql errors', graphQLErrors);
+    for (let i = 0; i < graphQLErrors.length; i += 1) {
+      const err = graphQLErrors[i];
+      switch (err.extensions.code) {
+        case 'UNAUTHENTICATED':
+          // error code is set to UNAUTHENTICATED
+          // when AuthenticationError thrown in resolver
+
+          // modify the operation context with a new token
+          return promiseToObservable(refreshCredentials()).flatMap(() => forward(operation));
+        default: {
+          return null;
+        }
+      }
+    }
   }
+  if (networkError.statusCode === 401) {
+    return promiseToObservable(refreshCredentials()).flatMap(() => forward(operation));
+  }
+
+  return null;
 });
 
 const client = new ApolloClient({
