@@ -1,14 +1,6 @@
-import {
-  call,
-  select,
-} from 'redux-saga/effects';
 import axios from 'axios';
 
-import {
-  getToken,
-} from '../data/selectors/authorization';
-
-function* makeHTTPRequest({
+async function makeHTTPRequest({
   path,
   method = 'GET',
   queryParameters = {},
@@ -18,12 +10,11 @@ function* makeHTTPRequest({
   const instance = axios.create({
     baseURL: process.env.SERVER_BASE_URL,
   });
-  const token = yield select(getToken);
-  const response = yield call(instance.request, {
+  const response = await instance.request({
     url: path,
     method,
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${window.localStorage.getItem('authToken')}`,
       ...headers,
     },
     params: queryParameters,
