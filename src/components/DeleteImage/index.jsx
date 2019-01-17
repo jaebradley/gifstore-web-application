@@ -1,31 +1,42 @@
-import React from 'react';
-import {
-  Mutation,
-} from 'react-apollo';
+import React, { Component } from 'react';
 import Delete from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import PropTypes from 'prop-types';
 
-import DELETE_URL_MUTATION from './mutation';
-import GET_IMAGES from '../Images/query';
+export default class DeleteImage extends Component {
+  static propTypes = {
+    classes: PropTypes.shape({
+      root: PropTypes.string.isRequired,
+      deleteIcon: PropTypes.string.isRequired,
+    }).isRequired,
+    url: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+  };
 
-const DeleteImage = ({ url }) => (
-  <Mutation
-    mutation={DELETE_URL_MUTATION}
-    refetchQueries={[{ query: GET_IMAGES }]}
-  >
-    { DeleteURLMutation => (
-      <div style={{ position: 'absolute', left: '206px' }}>
-        <IconButton size="small" onClick={() => DeleteURLMutation({ variables: { url } })}>
-          <Delete style={{ color: 'white' }} fontSize="small" />
-        </IconButton>
-      </div>
-    )}
-  </Mutation>
-);
+  handleOnClick = () => {
+    const {
+      url,
+      onClick,
+    } = this.props;
+    onClick(url);
+  }
 
-DeleteImage.propTypes = {
-  url: PropTypes.string.isRequired,
-};
+  render() {
+    const {
+      classes,
+    } = this.props;
 
-export default DeleteImage;
+    return (
+      <IconButton
+        className={classes.root}
+        size="small"
+        onClick={this.handleOnClick}
+      >
+        <Delete
+          className={classes.deleteIcon}
+          fontSize="small"
+        />
+      </IconButton>
+    );
+  }
+}

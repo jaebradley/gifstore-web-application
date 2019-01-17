@@ -5,32 +5,23 @@ import {
 import {
   List,
   AutoSizer,
-  WindowScroller,
-  CellMeasurerCache,
-  CellMeasurer,
 } from 'react-virtualized';
 
 import query from './query';
+import Image from '../../containers/Image';
 
-import DeleteImage from '../DeleteImage';
-
-const Image = ({ url }) => (
-  <div style={{
-    height: '250px',
-    width: '250px',
-    display: 'inline-flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }}
+const Row = ({ id, children }) => (
+  <div
+    key={id}
+    style={{
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '100%',
+    }}
   >
-    <DeleteImage url={url} />
-    <img
-      key={url}
-      alt="gif"
-      src={url}
-      style={{ maxHeight: '100%', maxWidth: '100%' }}
-    />
+    {children}
   </div>
 );
 
@@ -45,37 +36,6 @@ const Images = () => (
           data.me.urls.edges.forEach(edge => urls.push(edge.node.url));
         }
 
-        const cache = new CellMeasurerCache({
-          fixedWidth: true,
-          fixedHeight: false,
-          defaultHeight: 300,
-          defaultWidth: 300,
-          minWidth: 300,
-        });
-
-        function renderCell({
-          cellData, columnIndex, rowIndex, parent,
-        }) {
-          return (
-            <CellMeasurer
-              key={cellData}
-              cache={cache}
-              columnIndex={columnIndex}
-              rowIndex={rowIndex}
-              parent={parent}
-            >
-              {
-               ({ measure }) => (
-                 <Image url={cellData} onLoad={measure} />
-               )
-              }
-            </CellMeasurer>
-          );
-        }
-
-        console.log('urls', urls);
-
-        // TODO: @jaebradley use virtualized grid in future
         return (
           <div style={{ height: '100vh', width: '100vw' }}>
             <AutoSizer>
@@ -87,7 +47,7 @@ const Images = () => (
                     <List
                       height={height}
                       overscanRowCount={3}
-                      rowHeight={300}
+                      rowHeight={250}
                       width={width}
                       rowCount={rowCount}
                       rowRenderer={
@@ -97,22 +57,13 @@ const Images = () => (
                           const toIndex = Math.min(fromIndex + imagesPerRow, urls.length);
 
                           for (let i = fromIndex; i < toIndex; i += 1) {
-                            items.push(<Image url={urls[i]} />);
+                            items.push(<Image key={urls[i]} url={urls[i]} />);
                           }
 
                           return (
-                            <div
-                              style={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                width: '100%',
-                              }}
-                              key={key}
-                            >
+                            <Row key={key} id={key}>
                               {items}
-                            </div>
+                            </Row>
                           );
                         }
                       }
