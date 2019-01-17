@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import { Mutation } from 'react-apollo';
 
 import ADD_URL_MUTATION from './mutation';
-import GET_IMAGES from '../Images/query';
+import GET_IMAGES from 'GraphQL/queries/me';
 
 const AddURL = () => {
   let input;

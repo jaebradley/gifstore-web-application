@@ -37,7 +37,6 @@ const logoutLink = onError(({
   forward,
 }) => {
   if (graphQLErrors) {
-    console.log('graphql errors', graphQLErrors);
     for (let i = 0; i < graphQLErrors.length; i += 1) {
       const err = graphQLErrors[i];
       switch (err.extensions.code) {

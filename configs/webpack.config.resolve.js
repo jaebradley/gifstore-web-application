@@ -8,7 +8,9 @@ module.exports = {
     '.jsx',
   ],
   alias: {
-    Components: path.resolve(baseDir, 'src/components'),
     Actions: path.resolve(baseDir, 'src/actions'),
+    Components: path.resolve(baseDir, 'src/components'),
+    Containers: path.resolve(baseDir, 'src/containers'),
+    GraphQL: path.resolve(baseDir, 'src/graphql'),
   },
 };

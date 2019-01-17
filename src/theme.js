@@ -4,7 +4,10 @@ import {
 
 const theme = createMuiTheme({
   palette: {
-    type: 'light',
+    type: 'dark',
+    background: {
+      default: '#000000',
+    },
   },
   typography: {
     useNextVariants: true,

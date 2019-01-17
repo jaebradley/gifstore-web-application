@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import {
   MuiThemeProvider,
 } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import {
   whyDidYouUpdate,
 } from 'why-did-you-update';
@@ -50,6 +51,7 @@ if (process.env.NODE_ENV !== 'production') {
 const App = () => (
   <Provider store={store}>
     <MuiThemeProvider theme={theme}>
+      <CssBaseline />
       <ApolloProvider client={client}>
         <Router history={history}>
           <Switch>

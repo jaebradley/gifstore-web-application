@@ -1,11 +1,12 @@
 export default {
   root: {
-    height: '250px',
-    width: '250px',
+    height: 250,
+    width: 250,
     display: 'inline-flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 25,
   },
   imageContainer: {
     position: 'relative',
@@ -13,5 +14,8 @@ export default {
   image: {
     maxHeight: '100%',
     maxWidth: '100%',
+  },
+  hovering: {
+    opacity: 0.6,
   },
 };
