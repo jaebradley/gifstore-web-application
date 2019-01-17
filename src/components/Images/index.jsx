@@ -1,82 +1,76 @@
 import React from 'react';
-import {
-  Query,
-} from 'react-apollo';
+import PropTypes from 'prop-types';
 import {
   List,
   AutoSizer,
 } from 'react-virtualized';
 
-import query from './query';
 import Image from '../../containers/Image';
+import Row from '../../containers/Images/Row';
 
-const Row = ({ id, children }) => (
-  <div
-    key={id}
-    style={{
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100%',
-    }}
-  >
-    {children}
-  </div>
-);
+const Images = ({ urls }) => {
+  const urlData = [];
+  if (urls && urls.edges) {
+    urls.edges.forEach(edge => urlData.push(edge.node.url));
+  }
 
-const Images = () => (
-  <Query query={query}>
-    {
-      ({
-        data,
-      }) => {
-        const urls = [];
-        if (data && data.me && data.me.urls && data.me.urls.edges) {
-          data.me.urls.edges.forEach(edge => urls.push(edge.node.url));
-        }
+  return (
+    <div style={{ height: '100vh', width: '100vw' }}>
+      <AutoSizer>
+        {
+          ({ height, width }) => {
+            const imagesPerRow = Math.floor(width / 250);
+            const rowCount = Math.ceil(urlData.length / imagesPerRow);
+            return (
+              <List
+                height={height}
+                overscanRowCount={3}
+                rowHeight={250}
+                width={width}
+                rowCount={rowCount}
+                rowRenderer={
+                  ({ index, key }) => {
+                    const items = [];
+                    const fromIndex = index * imagesPerRow;
+                    const toIndex = Math.min(fromIndex + imagesPerRow, urlData.length);
 
-        return (
-          <div style={{ height: '100vh', width: '100vw' }}>
-            <AutoSizer>
-              {
-                ({ height, width }) => {
-                  const imagesPerRow = Math.floor(width / 250);
-                  const rowCount = Math.ceil(urls.length / imagesPerRow);
-                  return (
-                    <List
-                      height={height}
-                      overscanRowCount={3}
-                      rowHeight={250}
-                      width={width}
-                      rowCount={rowCount}
-                      rowRenderer={
-                        ({ index, key }) => {
-                          const items = [];
-                          const fromIndex = index * imagesPerRow;
-                          const toIndex = Math.min(fromIndex + imagesPerRow, urls.length);
+                    for (let i = fromIndex; i < toIndex; i += 1) {
+                      items.push(<Image key={urlData[i]} url={urlData[i]} />);
+                    }
 
-                          for (let i = fromIndex; i < toIndex; i += 1) {
-                            items.push(<Image key={urls[i]} url={urls[i]} />);
-                          }
-
-                          return (
-                            <Row key={key} id={key}>
-                              {items}
-                            </Row>
-                          );
-                        }
-                      }
-                    />
-                  );
+                    return (
+                      <Row key={key} id={key}>
+                        {items}
+                      </Row>
+                    );
+                  }
                 }
-              }
-            </AutoSizer>
-          </div>
-        );
-      }
-    }
-  </Query>
-);
+              />
+            );
+          }
+        }
+      </AutoSizer>
+    </div>
+  );
+};
+
+Images.propTypes = {
+  urls: PropTypes.shape({
+    edges: PropTypes.arrayOf(
+      PropTypes.shape({
+        node: PropTypes.shape({
+          id: PropTypes.string.isRequired,
+          url: PropTypes.string.isRequired,
+        }).isRequired,
+      }).isRequired,
+    ).isRequired,
+  }),
+};
+
+Images.defaultProps = {
+  urls: {
+    edges: {},
+  },
+};
 
 export default Images;

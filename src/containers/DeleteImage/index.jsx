@@ -11,7 +11,7 @@ import {
 import styles from './styles';
 import DeleteImage from '../../components/DeleteImage';
 import DELETE_URL_MUTATION from '../../graphql/mutations/deleteURL';
-import GET_IMAGES from '../../graphql/queries/getImages';
+import ME from '../../graphql/queries/me';
 
 function handleMutationProperties({ mutate }) {
   return {
@@ -19,7 +19,7 @@ function handleMutationProperties({ mutate }) {
       mutate({
         variables: { url },
         refetchQueries: [{
-          query: GET_IMAGES,
+          query: ME,
         }],
       });
     },

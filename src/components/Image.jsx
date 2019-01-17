@@ -17,6 +17,17 @@ export default class Image extends Component {
     showOverlay: false,
   };
 
+  shouldComponentUpdate(nextProps, nextState) {
+    const {
+      url,
+    } = this.props;
+    const {
+      showOverlay,
+    } = this.state;
+    return nextProps.url !== url
+      || nextState.showOverlay !== showOverlay;
+  }
+
   onHover = () => {
     this.setState({ showOverlay: true });
   }
