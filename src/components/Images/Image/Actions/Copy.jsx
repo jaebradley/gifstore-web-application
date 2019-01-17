@@ -1,24 +1,22 @@
 import React, { Component } from 'react';
-import Delete from '@material-ui/icons/Delete';
+import LinkIcon from '@material-ui/icons/Link';
 import IconButton from '@material-ui/core/IconButton';
 import PropTypes from 'prop-types';
+import copy from 'copy-to-clipboard';
 
-export default class DeleteImage extends Component {
+export default class Copy extends Component {
   static propTypes = {
     classes: PropTypes.shape({
       root: PropTypes.string.isRequired,
-      deleteIcon: PropTypes.string.isRequired,
     }).isRequired,
     url: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
   };
 
   handleOnClick = () => {
     const {
       url,
-      onClick,
     } = this.props;
-    onClick(url);
+    copy(url);
   }
 
   render() {
@@ -32,8 +30,8 @@ export default class DeleteImage extends Component {
         size="small"
         onClick={this.handleOnClick}
       >
-        <Delete
-          className={classes.deleteIcon}
+        <LinkIcon
+          color="secondary"
           fontSize="small"
         />
       </IconButton>

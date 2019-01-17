@@ -5,8 +5,8 @@ import {
   AutoSizer,
 } from 'react-virtualized';
 
-import Image from '../../containers/Image';
-import Row from '../../containers/Images/Row';
+import Image from 'Containers/Images/Image';
+import Row from 'Containers/Images/Row';
 
 const Images = ({ urls }) => {
   const urlData = [];

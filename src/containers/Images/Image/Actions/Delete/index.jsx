@@ -8,10 +8,11 @@ import {
   withStyles,
 } from '@material-ui/core/styles';
 
+import Delete from 'Components/Images/Image/Actions/Delete';
+import DELETE_URL_MUTATION from 'GraphQL/mutations/deleteURL';
+import ME from 'GraphQL/queries/me';
+
 import styles from './styles';
-import DeleteImage from '../../components/DeleteImage';
-import DELETE_URL_MUTATION from '../../graphql/mutations/deleteURL';
-import ME from '../../graphql/queries/me';
 
 function handleMutationProperties({ mutate }) {
   return {
@@ -34,4 +35,4 @@ export default compose(
       props: handleMutationProperties,
     },
   ),
-)(DeleteImage);
+)(Delete);

@@ -27,6 +27,8 @@
     "apollo-link-http": "^1.5.9",
     "apollo-link-state": "^0.4.2",
     "axios": "^0.18.0",
+    "classnames": "^2.2.6",
+    "copy-to-clipboard": "^3.0.8",
     "dotenv": "^6.2.0",
     "graphql": "^14.0.0",
     "graphql-anywhere": "^4.1.24",

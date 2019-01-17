@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
-import DeleteImage from '../containers/DeleteImage';
+import Actions from 'Containers/Images/Image/Actions';
 
 export default class Image extends Component {
   static propTypes = {
     classes: PropTypes.shape({
+      hovering: PropTypes.string.isRequired,
       root: PropTypes.string.isRequired,
       imageContainer: PropTypes.string.isRequired,
       image: PropTypes.string.isRequired,
@@ -52,10 +54,15 @@ export default class Image extends Component {
           onMouseLeave={this.onLeave}
         >
           {
-            showOverlay && <DeleteImage url={url} />
+            showOverlay && <Actions url={url} />
           }
           <img
-            className={classes.image}
+            className={classnames(
+              {
+                [classes.image]: true,
+                [classes.hovering]: showOverlay,
+              },
+            )}
             key={url}
             alt="gif"
             src={url}

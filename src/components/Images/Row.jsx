@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Image from '../../containers/Image';
+import Image from 'Containers/Images/Image';
 
 const Row = ({ children, classes, id }) => (
   <div
