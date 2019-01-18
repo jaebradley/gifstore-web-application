@@ -15,41 +15,43 @@ const Images = ({ urls }) => {
   }
 
   return (
-    <div style={{ height: '100vh', width: '100vw' }}>
-      <AutoSizer>
-        {
-          ({ height, width }) => {
-            const imagesPerRow = Math.floor(width / 250);
-            const rowCount = Math.ceil(urlData.length / imagesPerRow);
-            return (
-              <List
-                height={height}
-                overscanRowCount={3}
-                rowHeight={250}
-                width={width}
-                rowCount={rowCount}
-                rowRenderer={
-                  ({ index, key }) => {
-                    const items = [];
-                    const fromIndex = index * imagesPerRow;
-                    const toIndex = Math.min(fromIndex + imagesPerRow, urlData.length);
+    <div>
+      <div style={{ height: '100vh', width: '100vw' }}>
+        <AutoSizer>
+          {
+            ({ height, width }) => {
+              const imagesPerRow = Math.floor(width / 250);
+              const rowCount = Math.ceil(urlData.length / imagesPerRow);
+              return (
+                <List
+                  height={height}
+                  overscanRowCount={3}
+                  rowHeight={250}
+                  width={width}
+                  rowCount={rowCount}
+                  rowRenderer={
+                    ({ index, key }) => {
+                      const items = [];
+                      const fromIndex = index * imagesPerRow;
+                      const toIndex = Math.min(fromIndex + imagesPerRow, urlData.length);
 
-                    for (let i = fromIndex; i < toIndex; i += 1) {
-                      items.push(<Image key={urlData[i]} url={urlData[i]} />);
+                      for (let i = fromIndex; i < toIndex; i += 1) {
+                        items.push(<Image key={urlData[i]} url={urlData[i]} />);
+                      }
+
+                      return (
+                        <Row key={key} id={key}>
+                          {items}
+                        </Row>
+                      );
                     }
-
-                    return (
-                      <Row key={key} id={key}>
-                        {items}
-                      </Row>
-                    );
                   }
-                }
-              />
-            );
+                />
+              );
+            }
           }
-        }
-      </AutoSizer>
+        </AutoSizer>
+      </div>
     </div>
   );
 };

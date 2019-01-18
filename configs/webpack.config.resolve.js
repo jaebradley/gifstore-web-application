@@ -11,6 +11,7 @@ module.exports = {
     Actions: path.resolve(baseDir, 'src/actions'),
     Components: path.resolve(baseDir, 'src/components'),
     Containers: path.resolve(baseDir, 'src/containers'),
+    Data: path.resolve(baseDir, 'src/data'),
     GraphQL: path.resolve(baseDir, 'src/graphql'),
   },
 };

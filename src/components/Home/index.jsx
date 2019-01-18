@@ -9,8 +9,10 @@ import {
 import ME_QUERY from 'GraphQL/queries/me';
 import UserURLsConnection from 'GraphQL/fragments/UserURLsConnection';
 
-import Images from './Images';
-import AddURL from './AddURL';
+import Actions from 'Containers/Home/Actions';
+import AddImageDialog from 'Containers/Home/AddImageDialog';
+import Images from '../Images';
+
 
 const Home = () => (
   <Query query={ME_QUERY}>
@@ -22,8 +24,9 @@ const Home = () => (
         if (!loading) {
           return (
             <div>
-              <AddURL />
+              <Actions />
               <Images urls={filter(UserURLsConnection, data.me.urls)} />
+              <AddImageDialog />
             </div>
           );
         }
