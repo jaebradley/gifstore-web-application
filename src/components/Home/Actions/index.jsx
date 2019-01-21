@@ -25,7 +25,7 @@ class Actions extends React.Component {
     const {
       onAddImageClick,
     } = this.props;
-    this.setState({ open: false }, onAddImageClick);
+    this.setState({ open: false }, () => { onAddImageClick({ isOpen: true }); });
   }
 
   handleLogoutClick = () => {
