@@ -8,6 +8,9 @@ import {
   graphql,
 } from 'react-apollo';
 
+import {
+  DEFAULT_ADD_IMAGE,
+} from 'Client/stateLink';
 import AddImageDialog from 'Components/Home/AddImageDialog';
 import AddURL from 'GraphQL/mutations/AddURL';
 import Me from 'GraphQL/queries/me';
@@ -54,6 +57,14 @@ function handleMutationProperties({ mutate }) {
         refetchQueries: [{
           query: Me,
         }],
+        update: (cache) => {
+          // Reset stored state when mutation succeeds
+          cache.writeData({
+            data: {
+              AddImage: DEFAULT_ADD_IMAGE,
+            },
+          });
+        },
       });
     },
   };
