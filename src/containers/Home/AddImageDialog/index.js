@@ -1,7 +1,4 @@
 import {
-  connect,
-} from 'react-redux';
-import {
   compose,
 } from 'recompose';
 import {
@@ -11,17 +8,43 @@ import {
   graphql,
 } from 'react-apollo';
 
-import {
-  closeAddImageDialog,
-} from 'Actions/home';
 import AddImageDialog from 'Components/Home/AddImageDialog';
-import {
-  isAddImageDialogOpen,
-} from 'Data/selectors/home';
 import AddURL from 'GraphQL/mutations/AddURL';
 import Me from 'GraphQL/queries/me';
+import SetAddImage from 'GraphQL/mutations/SetAddImage';
+import GetAddImage from 'GraphQL/queries/GetAddImage';
 
 import styles from './styles';
+
+function handleGetAddImageQueryProperties({ data: { AddImage } }) {
+  const {
+    isOpen,
+    url,
+    isValidImage,
+  } = AddImage;
+  return {
+    open: isOpen,
+    url,
+    isValidImage,
+  };
+}
+
+function handleSetAddImageMutationProperties({ mutate }) {
+  return {
+    onChange: function handleChange({ url }) {
+      mutate({
+        variables: { url },
+      });
+    },
+    onClose: function handleClose() {
+      mutate({
+        variables: {
+          isOpen: false,
+        },
+      });
+    },
+  };
+}
 
 function handleMutationProperties({ mutate }) {
   return {
@@ -36,21 +59,20 @@ function handleMutationProperties({ mutate }) {
   };
 }
 
-function mapStateToProps(state) {
-  return {
-    open: isAddImageDialogOpen(state),
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    onClose: () => dispatch(closeAddImageDialog()),
-  };
-}
-
 export default compose(
   withStyles(styles),
-  connect(mapStateToProps, mapDispatchToProps),
+  graphql(
+    GetAddImage,
+    {
+      props: handleGetAddImageQueryProperties,
+    },
+  ),
+  graphql(
+    SetAddImage,
+    {
+      props: handleSetAddImageMutationProperties,
+    },
+  ),
   graphql(
     AddURL,
     {

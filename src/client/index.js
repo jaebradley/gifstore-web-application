@@ -10,11 +10,11 @@ import {
 import {
   onError,
 } from 'apollo-link-error';
-import {
-  InMemoryCache,
-} from 'apollo-cache-inmemory';
+
 import promiseToObservable from '../promiseToObservable';
 import refreshCredentials from '../refreshCredentials';
+import cache from './cache';
+import stateLink from './stateLink';
 
 const httpLink = new HttpLink({
   uri: `${process.env.SERVER_BASE_URL}/graphql`,
@@ -60,8 +60,8 @@ const logoutLink = onError(({
 });
 
 const client = new ApolloClient({
-  link: ApolloLink.from([authLink, logoutLink, httpLink]),
-  cache: new InMemoryCache(),
+  link: ApolloLink.from([authLink, logoutLink, stateLink, httpLink]),
+  cache,
 });
 
 export default client;
