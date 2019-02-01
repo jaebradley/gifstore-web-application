@@ -13,6 +13,7 @@ export default class Image extends Component {
       image: PropTypes.string.isRequired,
     }).isRequired,
     url: PropTypes.string.isRequired,
+    urlId: PropTypes.string.isRequired,
   }
 
   state = {
@@ -42,6 +43,7 @@ export default class Image extends Component {
     const {
       classes,
       url,
+      urlId,
     } = this.props;
     const {
       showOverlay,
@@ -54,7 +56,7 @@ export default class Image extends Component {
           onMouseLeave={this.onLeave}
         >
           {
-            showOverlay && <Actions url={url} />
+            showOverlay && <Actions url={url} urlId={urlId} />
           }
           <img
             className={classnames(

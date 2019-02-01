@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  fragment UserURLsConnection on URLsConnection {
+  fragment UserURLsConnection on URLConnection {
     edges {
       node {
         id,
