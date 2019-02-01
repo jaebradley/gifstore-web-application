@@ -12,11 +12,14 @@ import {
   DEFAULT_ADD_IMAGE,
 } from 'Client/stateLink';
 import AddImageDialog from 'Components/Home/AddImageDialog';
-import AddURL from 'GraphQL/mutations/AddURL';
+import createURL from 'GraphQL/mutations/createURL';
+import createURLForCurrentUser from 'GraphQL/mutations/createURLForCurrentUser';
 import Me from 'GraphQL/queries/me';
 import SetAddImage from 'GraphQL/mutations/SetAddImage';
 import GetAddImage from 'GraphQL/queries/GetAddImage';
+import getURL from 'GraphQL/queries/url';
 
+import client from '../../../client';
 import styles from './styles';
 
 function handleGetAddImageQueryProperties({ data: { AddImage } }) {
@@ -49,11 +52,35 @@ function handleSetAddImageMutationProperties({ mutate }) {
   };
 }
 
-function handleMutationProperties({ mutate }) {
+function handleMutationProperties() {
   return {
-    onSubmit: function addURL(url) {
-      mutate({
-        variables: { url },
+    onSubmit: async function addURL(url) {
+      const { data } = await client.query({
+        query: getURL,
+        variables: {
+          value: url,
+        },
+      });
+
+      let urlId;
+
+      if (!data.url) {
+        const result = await client.mutate({
+          mutation: createURL,
+          variables: {
+            url,
+          },
+        });
+        urlId = result.data.createURL.id;
+      }
+
+      if (!urlId) {
+        urlId = url.id;
+      }
+
+      await client.mutate({
+        mutation: createURLForCurrentUser,
+        variables: { urlId },
         refetchQueries: [{
           query: Me,
         }],
@@ -85,8 +112,9 @@ export default compose(
     },
   ),
   graphql(
-    AddURL,
+    getURL,
     {
+      options: props => ({ variables: { value: props.url } }),
       props: handleMutationProperties,
     },
   ),

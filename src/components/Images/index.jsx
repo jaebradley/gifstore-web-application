@@ -11,7 +11,7 @@ import Row from 'Containers/Images/Row';
 const Images = ({ urls }) => {
   const urlData = [];
   if (urls && urls.edges) {
-    urls.edges.forEach(edge => urlData.push(edge.node.url));
+    urls.edges.forEach(edge => urlData.push({ url: edge.node.url, id: edge.node.id }));
   }
 
   return (
@@ -36,7 +36,13 @@ const Images = ({ urls }) => {
                       const toIndex = Math.min(fromIndex + imagesPerRow, urlData.length);
 
                       for (let i = fromIndex; i < toIndex; i += 1) {
-                        items.push(<Image key={urlData[i]} url={urlData[i]} />);
+                        items.push(
+                          <Image
+                            key={urlData[i].id}
+                            url={urlData[i].url}
+                            urlId={urlData[i].id}
+                          />,
+                        );
                       }
 
                       return (

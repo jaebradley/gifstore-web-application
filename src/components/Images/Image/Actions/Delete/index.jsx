@@ -8,16 +8,16 @@ export default class DeleteImage extends Component {
     classes: PropTypes.shape({
       root: PropTypes.string.isRequired,
     }).isRequired,
-    url: PropTypes.string.isRequired,
+    urlId: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
   };
 
   handleOnClick = () => {
     const {
-      url,
+      urlId,
       onClick,
     } = this.props;
-    onClick(url);
+    onClick(urlId);
   }
 
   render() {
