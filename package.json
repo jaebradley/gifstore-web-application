@@ -31,7 +31,7 @@
     "classnames": "^2.2.6",
     "copy-to-clipboard": "^3.0.8",
     "dotenv": "^6.2.0",
-    "graphql": "^14.0.0",
+    "graphql": "^14.6.0",
     "graphql-anywhere": "^4.1.24",
     "graphql-tag": "^2.10.0",
     "history": "^4.7.2",
